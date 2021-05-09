@@ -20,13 +20,13 @@
    - notebooks -> EDA ноутбук 
    - tests -> Тесты для каждого модуля
 3. Запуск приложения из командной строки: 
-   Режим вычисления скоров на кросс-валидации и построения финальной модели:
-   python train_model.py score configs/train_config.yml
-   - команда score
-   - параметры:
-     - путь к конфигу
-   Режим инференса (predict) с считываением готовой модели из папки models и данных в формате csv (для удобства заготовлен sample в папке data):
-   python train_model.py predict configs/train_config.yml models/model.pkl data/sample.csv
+   - режим вычисления скоров на кросс-валидации и построения финальной модели:
+     - python train_model.py score configs/train_config.yml
+     - команда score
+     - параметры:
+       - путь к конфигу
+   - режим инференса (predict) с считываением готовой модели из папки models и данных в формате csv (для удобства заготовлен sample в папке data):
+   - python train_model.py predict configs/train_config.yml models/model.pkl data/sample.csv
    - команда predict
    - параметры: 
      - путь к конфигу, который был использован при создании модели
