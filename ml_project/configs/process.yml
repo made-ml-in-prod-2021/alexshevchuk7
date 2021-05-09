@@ -1,0 +1,30 @@
+input_data_path: "data/heart.csv"
+output_model_path: "models/model.pkl"
+metric_path: "models/metrics.json"
+cv_params:
+  folds: 5
+  random_state: 12
+train_params:
+  final_estimator: 'RandomForestClassifier'
+  preprocessing: process
+feature_params:
+  categorical_features:
+    - 'cp' 
+    - 'restecg' 
+    - 'slope' 
+    - 'ca' 
+    - 'thal'
+  numerical_features:
+    - 'age' 
+    - 'trestbps' 
+    - 'chol' 
+    - 'thalach' 
+    - 'oldpeak'
+  selected_features:
+    - 'age' 
+    - 'trestbps' 
+    - 'restecg' 
+    - 'thalach' 
+    - 'oldpeak' 
+    - 'thal'
+  target_col: 'target'

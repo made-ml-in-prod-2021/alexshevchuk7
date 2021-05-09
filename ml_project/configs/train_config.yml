@@ -1,0 +1,30 @@
+input_data_path: "data/heart.csv"
+output_model_path: "models/model.pkl"
+metric_path: "models/metrics.json"
+cv_params:
+  folds: 9
+  random_state: 0
+train_params:
+  final_estimator: 'LogisticRegression'
+  preprocessing: None
+feature_params:
+  categorical_features:
+    - 'cp' 
+    - 'restecg' 
+    - 'slope' 
+    - 'ca' 
+    - 'thal'
+  numerical_features:
+    - 'age' 
+    - 'trestbps' 
+    - 'chol' 
+    - 'thalach' 
+    - 'oldpeak'
+  selected_features:
+    - 'cp' 
+    - 'trestbps' 
+    - 'restecg' 
+    - 'slope' 
+    - 'ca' 
+    - 'thal'
+  target_col: 'target'
