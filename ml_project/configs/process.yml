@@ -6,7 +6,7 @@ cv_params:
   random_state: 12
 train_params:
   final_estimator: 'RandomForestClassifier'
-  model_params: {'solver': 'newton-cg', 'max_iter': 100}
+  model_params: {'n_estimators': 30}
   preprocessing: process
 feature_params:
   categorical_features:
