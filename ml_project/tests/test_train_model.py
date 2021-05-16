@@ -92,9 +92,9 @@ def test_train_configure(config_path):
 
 def test_score_model(config_path):
     path, scores = score_model(config_path)
-    assert 1 >= max(scores)
-    assert 0 <= min(scores)
-    assert False == np.any(np.isnan(scores))
+    assert 1 >= max([score for score in scores.values()])
+    assert 0 <= min([score for score in scores.values()])
+    assert False == np.any(np.isnan([score for score in scores.values()]))
 
 
 def test_stacking_features_inference(model_params, evaluation_dataset_path):
