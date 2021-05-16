@@ -6,6 +6,7 @@ cv_params:
   random_state: 0
 train_params:
   final_estimator: 'LogisticRegression'
+  model_params: {'solver': 'newton-cg', 'max_iter': 100}
   preprocessing: None
 feature_params:
   categorical_features:
