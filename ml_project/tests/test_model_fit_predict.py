@@ -6,6 +6,7 @@ from faker import Faker
 from typing import List
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, recall_score, precision_score
 
 from model_fit_predict import (get_stacking_feature,
                                merge_features,
@@ -56,6 +57,15 @@ def feature_params():
     params.selected_features = ['age', 'resteg']
     params.target_col = 'target'
     return params
+  
+  
+@pytest.fixture()
+def metrics():
+    metrics = {'accuracy': accuracy_score,
+               'recall': recall_score,
+               'precision': precision_score,
+               }
+    return metrics
 
 
 @pytest.fixture()
@@ -129,16 +139,16 @@ def test_merge_features(estimator, final_estimator, train_pipeline_params, cv_pa
     assert (100, 2) == merge_features((x1, x2)).shape
 
 
-def test_cv_score(estimator, final_estimator, train_pipeline_params, cv_params ,train_params):
+def test_cv_score(estimator, final_estimator, train_pipeline_params, metrics, cv_params ,train_params):
     df = read_data(train_pipeline_params)
     train_df, target = train_target(df, ['age', 'resteg'], 'target')
     x1 = get_stacking_feature(estimator, train_df, target, cv_params)
     x2 = get_stacking_feature(final_estimator, train_df, target, cv_params)
     stacked_features = merge_features((x1, x2))
-    accuracy, recall, precision = cv_score(stacked_features, target, train_params, cv_params)
-    assert 0 <= accuracy <= 1
-    assert 0 <= recall <= 1
-    assert 0 <= precision <= 1
+    mean_scores = cv_score(stacked_features, target, metrics, train_params, cv_params)
+    assert 0 <= mean_scores['mean_accuracy'] <= 1
+    assert 0 <= mean_scores['mean_recall'] <= 1
+    assert 0 <= mean_scores['mean_precision'] <= 1
 
 
 @pytest.fixture()
