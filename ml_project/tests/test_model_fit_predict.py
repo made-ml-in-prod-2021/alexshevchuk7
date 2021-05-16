@@ -14,20 +14,12 @@ from model_fit_predict import (get_stacking_feature,
                                get_prediction,
                                cv_score)
 from prepare_dataset import read_data, train_target
+from entities.cv_params import CVParams
+from entities.train_params import TrainingParams
 
 @dataclass()
 class TrainingPipelineParams:
     input_data_path: str
-
-@dataclass()
-class CVParams:
-    folds: int
-    random_state: int
-
-@dataclass()
-class TrainingParams:
-    final_estimator: List[str]
-    preprocessing: List[str]
 
 @dataclass()
 class FeatureParams:
@@ -47,6 +39,7 @@ def cv_params():
 def train_params():
     params = TrainingParams
     params.final_estimator = 'LogisticRegression'
+    params.model_params = {'solver': 'newton-cg', 'max_iter': 100}
     params.preprocessing = None
     return params
 
