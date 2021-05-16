@@ -26,7 +26,7 @@
      - параметры:
        - путь к конфигу
    - режим инференса (predict) с считываением готовой модели из папки models и данных в формате csv (для удобства заготовлен sample в папке data):
-   - python train_model.py predict configs/train_config.yml models/model.pkl data/sample.csv
+   - python train_model.py predict -c configs/train_config.yml -m models/model.pkl -d data/sample.csv
    - команда predict
    - параметры: 
      - путь к конфигу, который был использован при создании модели
