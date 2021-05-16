@@ -158,9 +158,9 @@ def train_command(config_path: str):
 
 
 @cli.command(name="predict")
-@click.argument("config_path")
-@click.argument("path_to_model")
-@click.argument("data_path")
+@click.option('--config_path', '-c')
+@click.option('--path_to_model', '-m')
+@click.option('--data_path', '-d')
 def predict(config_path: str, path_to_model: str, data_path: str):
     predict_from_csv(config_path, path_to_model, data_path)
 
