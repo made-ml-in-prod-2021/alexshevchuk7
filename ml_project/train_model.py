@@ -30,6 +30,12 @@ handler = logging.StreamHandler(sys.stdout)
 logger.setLevel(logging.INFO)
 logger.addHandler(handler)
 
+metrics = {
+           'accuracy': accuracy_score,
+           'recall': recall_score,
+           'precision': precision_score,
+           }
+
 
 def train_configure(config_path: str):
     training_params = read_training_pipeline_params(config_path)
@@ -78,7 +84,6 @@ def stacking_features_for_inference(params, evaluation_dataset_path):
     inference_data = combined_df[train_len:]
 
     estimators = [GaussianNB(), RandomForestClassifier(), LogisticRegression(solver='newton-cg')]
-    inference_data.to_csv('inference.csv')
     features = []
     for estimator in estimators:
         estimator.fit(train, target)
@@ -99,14 +104,14 @@ def score_model(path_to_params):
 
     stacking_df = get_stacked_df(train, target, training_parameters)
 
-    scores = cv_score(stacking_df, target, training_parameters.train_params, training_parameters.cv_params)
+    scores = cv_score(stacking_df, target, metrics, training_parameters.train_params, training_parameters.cv_params)
     logger.info(f'Scores were evaluated using {training_parameters.cv_params.folds}-fold cross-validation')
 
     with open(training_parameters.metric_path, "w") as metric_file:
         json.dump(scores, metric_file)
-    logger.info(f'Mean CV accuracy: {scores[0]}')
-    logger.info(f'mean CV recall: {scores[1]}')
-    logger.info(f'mean CV precision: {scores[2]}')
+
+    for score_name in metrics.keys():
+        logger.info(f'Mean CV {score_name}: {scores["mean_" + score_name]}')
 
     logger.info(f'Serializing final model to {training_parameters.output_model_path}...')
     final_model = train_final_model(stacking_df, target, training_parameters.train_params)
