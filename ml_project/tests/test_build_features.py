@@ -7,14 +7,7 @@ from build_features import (process_categorical_features,
                             process_numerical_features,
                             build_transformer,
                             make_features)
-
-
-@dataclass()
-class FeatureParams:
-    categorical_features: List[str]
-    numerical_features: List[str]
-    selected_features: List[str]
-    target_col: str
+from entities.feature_params import FeatureParams
 
 
 @pytest.fixture()
