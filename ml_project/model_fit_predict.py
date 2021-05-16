@@ -18,9 +18,9 @@ from prepare_dataset import read_data, train_target
 
 
 Estimator = Union[GaussianNB, RandomForestClassifier, LogisticRegression]
-estimators = {'RandomForestClassifier': RandomForestClassifier(),
-              'LogisticRegression': LogisticRegression(),
-              'GaussianNB': GaussianNB()}
+estimators = {'RandomForestClassifier': RandomForestClassifier,
+              'LogisticRegression': LogisticRegression,
+              'GaussianNB': GaussianNB}
 
 
 def get_stacking_feature(estimator: Estimator,
@@ -52,9 +52,10 @@ def train_final_model(stacked_features: pd.DataFrame,
                       train_params: TrainingParams) -> Estimator:
 
     estimator = train_params.final_estimator
+    model_params = train_params.model_params
 
     if estimator in estimators.keys():
-        model = estimators[estimator]
+        model = estimators[estimator](**model_params)
     else:
         raise NotImplementedError()
 
@@ -92,9 +93,10 @@ def cv_score(train_df: pd.DataFrame,
     """
     kf = KFold(n_splits=cv_params.folds, shuffle=True, random_state=cv_params.random_state)
     final_estimator = train_params.final_estimator
+    model_params = train_params.model_params
 
     if final_estimator in estimators.keys():
-        estimator = estimators[final_estimator]
+        estimator = estimators[final_estimator](**model_params)
     else:
         raise NotImplementedError()
 
