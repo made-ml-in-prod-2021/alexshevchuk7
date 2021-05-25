@@ -10,14 +10,14 @@ INCORRECT_DATA =  [1, 120, 's', 2, 0, 3]
 
 
 @pytest.mark.parametrize(
-    'data_sample, response',
+    'data_sample, correct_response',
     [
         (CORRECT_DATA, 200),
         (SHORT_DATA, 400),
         (INCORRECT_DATA, 400),
     ]
 )
-def test_predict(data_sample, response):
+def test_predict(data_sample, correct_response):
     load_models()
     response = client.get("/predict/", json={'data': [data_sample]})
     assert correct_response == response.status_code
