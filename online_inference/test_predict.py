@@ -1,6 +1,6 @@
 import pytest
 from fastapi.testclient import TestClient
-from app import app
+from app import app, load_models
 
 client = TestClient(app)
 
@@ -18,5 +18,6 @@ INCORRECT_DATA =  [1, 120, 's', 2, 0, 3]
     ]
 )
 def test_predict(data_sample, response):
+    load_models()
     response = client.get("/predict/", json={'data': [data_sample]})
-    return response.status_code
+    assert correct_response == response.status_code
