@@ -53,11 +53,8 @@ def load_models():
     global model, partial_models
     partial_models_path = ['partial_gauss.pkl', 'partial_rfc.pkl', 'partial_lrg.pkl']
 
-    #model_path = os.getenv("PATH_TO_MODEL")
-    #if model_path is None:
-    #    err = f"PATH_TO_MODEL {model_path} is None"
-    #    logger.error(err)
-    #    raise RuntimeError(err)
+    partial_models = []
+    
     for model_path in partial_models_path:
         partial_models.append(load_object(model_path))
 
